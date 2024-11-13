@@ -1,0 +1,68 @@
+---
+---
+<header class="top-bar">
+  <div class="container">
+    <div class="logo">
+      <span class="logo-text">PKR Tax Calculator</span>
+    </div>
+    <nav>
+      <a href="#" class="active">Calculator</a>
+      <a href="#tax-info">Tax Information</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+.top-bar {
+  background: #fff;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-text {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: rgb(var(--primary));
+}
+
+nav {
+  display: flex;
+  gap: 2rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: #4b5563;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+nav a:hover {
+  color: rgb(var(--primary));
+}
+
+nav a.active {
+  color: rgb(var(--primary));
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  nav {
+    gap: 1rem;
+  }
+}
+</style>

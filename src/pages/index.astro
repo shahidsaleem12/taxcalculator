@@ -1,0 +1,147 @@
+---
+import Layout from '../layouts/Layout.astro';
+import TopBar from '../components/TopBar.astro';
+import TaxCalculator from '../components/TaxCalculator.astro';
+---
+
+<Layout 
+	title="Pakistan Income Tax Calculator | Calculate Your Monthly Tax and Take-Home Pay"
+	description="Free Pakistan income tax calculator to estimate your monthly and annual tax liability. Get accurate tax calculations based on latest FBR tax slabs."
+>
+	<TopBar />
+	<main>
+		<h1>Pakistan Income Tax Calculator</h1>
+		<p class="subtitle">
+			Calculate your monthly income tax and take-home salary based on latest FBR tax rates
+		</p>
+		<TaxCalculator />
+		<section id="tax-info" class="info-section">
+			<h2>Understanding Pakistan Income Tax Slabs (2023-24)</h2>
+			<div class="tax-brackets">
+				<div class="bracket">
+					<h3>Up to Rs. 600,000</h3>
+					<p>No tax</p>
+				</div>
+				<div class="bracket">
+					<h3>Rs. 600,001 - 1,200,000</h3>
+					<p>2.5% of amount exceeding Rs. 600,000</p>
+				</div>
+				<div class="bracket">
+					<h3>Rs. 1,200,001 - 2,400,000</h3>
+					<p>Rs. 15,000 + 12.5% of excess over Rs. 1,200,000</p>
+				</div>
+				<div class="bracket">
+					<h3>Rs. 2,400,001 - 3,600,000</h3>
+					<p>Rs. 165,000 + 17.5% of excess over Rs. 2,400,000</p>
+				</div>
+				<div class="bracket">
+					<h3>Rs. 3,600,001 - 6,000,000</h3>
+					<p>Rs. 375,000 + 22.5% of excess over Rs. 3,600,000</p>
+				</div>
+				<div class="bracket">
+					<h3>Rs. 6,000,001 - 12,000,000</h3>
+					<p>Rs. 855,000 + 27.5% of excess over Rs. 6,000,000</p>
+				</div>
+				<div class="bracket">
+					<h3>Above Rs. 12,000,000</h3>
+					<p>Rs. 2,550,000 + 35% of excess over Rs. 12,000,000</p>
+				</div>
+			</div>
+			<div class="disclaimer">
+				<p>Note: This calculator provides estimates based on the latest FBR tax slabs. For precise calculations:</p>
+				<ul>
+					<li>Consult a tax professional</li>
+					<li>Consider additional deductions and exemptions</li>
+					<li>Account for any special tax status or benefits</li>
+				</ul>
+			</div>
+		</section>
+	</main>
+</Layout>
+
+<style>
+	main {
+		margin: auto;
+		padding: 2rem;
+		max-width: 800px;
+	}
+	h1 {
+		font-size: 2.5rem;
+		font-weight: 700;
+		line-height: 1.2;
+		text-align: center;
+		margin-bottom: 1rem;
+		background-image: var(--gradient);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-size: 400%;
+		background-position: 0%;
+	}
+	.subtitle {
+		text-align: center;
+		color: #4b5563;
+		margin-bottom: 3rem;
+	}
+	.info-section {
+		margin-top: 3rem;
+		padding: 2rem;
+		background: white;
+		border-radius: 1rem;
+		box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+	}
+	.info-section h2 {
+		font-size: 1.5rem;
+		margin-bottom: 1.5rem;
+		color: #111827;
+		text-align: center;
+	}
+	.tax-brackets {
+		display: grid;
+		gap: 1rem;
+		margin-bottom: 2rem;
+	}
+	.bracket {
+		padding: 1rem;
+		background: #f9fafb;
+		border-radius: 0.5rem;
+		border-left: 4px solid rgb(var(--primary));
+	}
+	.bracket h3 {
+		color: #111827;
+		font-size: 1.1rem;
+		margin-bottom: 0.5rem;
+	}
+	.bracket p {
+		color: #4b5563;
+		font-size: 0.95rem;
+	}
+	.disclaimer {
+		margin-top: 2rem;
+		padding-top: 2rem;
+		border-top: 1px solid #e5e7eb;
+	}
+	.disclaimer p {
+		color: #4b5563;
+		margin-bottom: 1rem;
+	}
+	.disclaimer ul {
+		list-style-type: disc;
+		margin-left: 1.5rem;
+		color: #4b5563;
+	}
+	.disclaimer li {
+		margin-bottom: 0.5rem;
+	}
+
+	@media (max-width: 640px) {
+		main {
+			padding: 1rem;
+		}
+		h1 {
+			font-size: 2rem;
+		}
+		.info-section {
+			padding: 1.5rem;
+		}
+	}
+</style>

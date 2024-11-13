@@ -1,0 +1,199 @@
+---
+---
+<div class="calculator">
+  <form id="taxForm" class="tax-form">
+    <div class="input-group">
+      <label for="salary">Monthly Salary (PKR)</label>
+      <div class="input-wrapper">
+        <span class="currency-symbol">Rs.</span>
+        <input 
+          type="number" 
+          id="salary" 
+          name="salary" 
+          min="0"
+          required 
+          placeholder="Enter your monthly salary"
+        />
+      </div>
+    </div>
+    <button type="submit" class="calculate-btn">Calculate Tax</button>
+  </form>
+
+  <div id="results" class="results hidden">
+    <h2>Monthly Tax Breakdown</h2>
+    <div class="result-grid">
+      <div class="result-item">
+        <span>Monthly Gross:</span>
+        <span id="grossIncome">Rs. 0</span>
+      </div>
+      <div class="result-item">
+        <span>Monthly Tax:</span>
+        <span id="monthlyTax">Rs. 0</span>
+      </div>
+      <div class="result-item">
+        <span>Take Home:</span>
+        <span id="netIncome">Rs. 0</span>
+      </div>
+      <div class="result-item">
+        <span>Annual Tax:</span>
+        <span id="annualTax">Rs. 0</span>
+      </div>
+      <div class="result-item">
+        <span>Tax Bracket:</span>
+        <span id="taxBracket">0%</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const taxBrackets = [
+  { min: 0, max: 50000, rate: 0, base: 0 }, // 600,000 annually
+  { min: 50000, max: 100000, rate: 0.025, base: 0 }, // 600,001 - 1,200,000
+  { min: 100000, max: 200000, rate: 0.125, base: 1250 }, // 1,200,001 - 2,400,000
+  { min: 200000, max: 300000, rate: 0.175, base: 13750 }, // 2,400,001 - 3,600,000
+  { min: 300000, max: 500000, rate: 0.225, base: 31250 }, // 3,600,001 - 6,000,000
+  { min: 500000, max: 1000000, rate: 0.275, base: 71250 }, // 6,000,001 - 12,000,000
+  { min: 1000000, max: Infinity, rate: 0.35, base: 212500 } // Above 12,000,000
+];
+
+function calculateTax(monthlySalary) {
+  const bracket = taxBrackets.find(b => monthlySalary > b.min && monthlySalary <= b.max);
+  if (!bracket) return 0;
+
+  const excessAmount = monthlySalary - bracket.min;
+  const monthlyTax = bracket.base + (excessAmount * bracket.rate);
+  
+  return {
+    monthlyTax,
+    annualTax: monthlyTax * 12,
+    bracket: bracket.rate * 100
+  };
+}
+
+function formatCurrency(amount) {
+  return new Intl.NumberFormat('en-PK', {
+    style: 'currency',
+    currency: 'PKR',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  }).format(amount).replace('PKR', 'Rs.');
+}
+
+document.getElementById('taxForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const monthlySalary = parseFloat(document.getElementById('salary').value);
+  const { monthlyTax, annualTax, bracket } = calculateTax(monthlySalary);
+  const monthlyNet = monthlySalary - monthlyTax;
+
+  document.getElementById('grossIncome').textContent = formatCurrency(monthlySalary);
+  document.getElementById('monthlyTax').textContent = formatCurrency(monthlyTax);
+  document.getElementById('netIncome').textContent = formatCurrency(monthlyNet);
+  document.getElementById('annualTax').textContent = formatCurrency(annualTax);
+  document.getElementById('taxBracket').textContent = `${bracket.toFixed(1)}%`;
+  
+  document.getElementById('results').classList.remove('hidden');
+});
+</script>
+
+<style>
+.calculator {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.tax-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.input-group label {
+  font-weight: 500;
+  color: #374151;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.currency-symbol {
+  position: absolute;
+  left: 0.75rem;
+  color: #6b7280;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 0.75rem;
+  padding-left: 2.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+.calculate-btn {
+  background: rgb(var(--primary));
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.calculate-btn:hover {
+  background: rgb(var(--primary-dark));
+}
+
+.results {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.results.hidden {
+  display: none;
+}
+
+.results h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: #111827;
+}
+
+.result-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem;
+  background: #f9fafb;
+  border-radius: 0.5rem;
+}
+
+.result-item span:first-child {
+  color: #4b5563;
+}
+
+.result-item span:last-child {
+  font-weight: 600;
+  color: #111827;
+}
+</style>
